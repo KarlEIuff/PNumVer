@@ -10,7 +10,7 @@ namespace PNumVer
     {
         static void Main(string[] args)
         {
-            // bool to check if amount of of chars entered is correct or not
+            // bool to check if amount of chars entered is correct or not
             bool check = false;
 
             do
@@ -30,7 +30,18 @@ namespace PNumVer
                             // Calling the method to check the day
                             if(CheckDay(pNumber) && check)
                             {
+                                // Calling the method to check the birth number
+                                if(CheckBirthNumber(pNumber) && check)
+                                {
+                                    // Calling the method to check the gender and prints out the resulting string of the program
+                                    Console.WriteLine("The number " + pNumber + " is valid and the gender of it is " + CheckGender(pNumber));
 
+                                } 
+                                else
+                                {
+                                    check = false;
+                                    Console.WriteLine("Incorrect birth number! Try again");
+                                }
                             }
                             else
                             {
@@ -80,7 +91,6 @@ namespace PNumVer
         // Returns true if the month is valid
         static bool CheckMonth(string pNumber)
         {
-
             string sMonth = "";
 
             for(int i = 4; i < 6; i++)
@@ -102,7 +112,6 @@ namespace PNumVer
         // Returns true if the day is valid
         static bool CheckDay(string pNumber)
         {
-
             string sDay = "";
             string sMonth = "";
             string sYear = "";
@@ -131,7 +140,6 @@ namespace PNumVer
             {
                 return true;
             }
-
             return false;
         }
 
@@ -196,6 +204,53 @@ namespace PNumVer
                 }
             }
             return false;
+        }
+
+        // Checking if all three birth numbers are valid
+        static bool CheckBirthNumber(string pNumber)
+        {
+            // if counter becomes 3, that means all three numbers are valid
+            int counter = 0;
+
+            for(int i = 8; i < 11; i++)
+            {
+                string sBirthNumber = "";
+                sBirthNumber += pNumber[i];
+                // making each birth number into int one at a time and checking them individually in the if statement
+                int birthNumber = int.Parse(sBirthNumber);
+                if(birthNumber >= 0 && birthNumber <= 9)
+                {
+                    counter++;
+                }
+            }
+
+            if(counter == 3)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // Checking if the birthnumber is even or odd and returns the gender in a string
+        static string CheckGender(string pNumber)
+        {
+            string sBirthNumber = "";
+            int birthNumber;
+            string gender;
+
+            sBirthNumber += pNumber[10];
+            birthNumber = int.Parse(sBirthNumber);
+
+            if(birthNumber % 2 == 0 || birthNumber == 0)
+            {
+                gender = "female";
+            }
+            else
+            {
+                gender = "male";
+            }
+
+            return gender;
         }
     }
 }
